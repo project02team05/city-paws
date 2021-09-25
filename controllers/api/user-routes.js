@@ -54,7 +54,7 @@ router.get('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
-
+// Post user
 router.post('/', (req, res) => {
     // expects Login information
     User.create({
@@ -77,5 +77,5 @@ router.post('/', (req, res) => {
         });
 });
 
-// Export 
+// Export the Router
 module.exports = router;
