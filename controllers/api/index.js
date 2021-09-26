@@ -1,11 +1,11 @@
+// ApI endpoints
 const router = require('express').Router();
-
-const userRoutes = require('./user-routes.js');
-const postRoutes = require('./post-routes');
+const serviceRoutes = require("./service-routes");
 const commentRoutes = require('./comment-routes');
+const userRoutes = require('./user-routes');
 
+router.use("/services", serviceRoutes);
 router.use('/users', userRoutes);
-router.use('/posts', postRoutes);
-router.use('/comments', commentRoutes);
+router.use("/reviews", commentRoutes);
 
 module.exports = router;

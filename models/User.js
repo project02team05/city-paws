@@ -10,7 +10,6 @@ class User extends Model {
   }
 }
 
-// create fields/columns for User model
 User.init(
   {
     id: {
@@ -19,9 +18,13 @@ User.init(
       primaryKey: true,
       autoIncrement: true
     },
-    username: {
+    firstName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -37,7 +40,11 @@ User.init(
       validate: {
         len: [4]
       }
-    }
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     hooks: {
@@ -52,6 +59,7 @@ User.init(
         return updatedUserData;
       }
     },
+  
     sequelize,
     timestamps: false,
     freezeTableName: true,

@@ -1,9 +1,18 @@
 // import all models
-const User = require('./User');
+// --> Is Post needed on our site?
 const Post = require('./Post');
-const Comment = require('./Comment');
+const User = require("./User");
+const Comment = require("./Comment");
+const Service = require("./Service");
 
-//create associations
+const createTables = () => {
+  User.sync();
+  Comment.sync();
+  Service.sync();
+};
+
+// create associations
+// --> Is Post needed on our site?
 User.hasMany(Post, {
     foreignKey: 'user_id'
 });
@@ -12,20 +21,27 @@ Post.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
+// User / Comment / Service Associations
 Comment.belongsTo(User, {
     foreignKey: 'user_id'
   });
   
-Comment.belongsTo(Post, {
-    foreignKey: 'post_id'
+Comment.belongsTo(Service, {
+    foreignKey: 'service_id'
 });
   
 User.hasMany(Comment, {
     foreignKey: 'user_id'
 });
   
-Post.hasMany(Comment, {
-    foreignKey: 'post_id'
+Service.hasMany(Comment, {
+    foreignKey: 'service_id'
 });
 
-module.exports = {User, Post, Comment};
+module.exports = {
+    Post,
+    User,
+    Comment,
+    Service,
+    createTables
+  };

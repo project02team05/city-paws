@@ -1,37 +1,38 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Comment } = require('../models');
+const { Service, User, Comment } = require('../models');
 
-// get all posts for homepage
+//get all service for homepage
 router.get('/', (req, res) => {
   console.log('======================');
-  Post.findAll({
+  Service.findAll({
     attributes: [
       'id',
-      'post_content',
-      'title',
-      'created_at'
+      'name',
+      'address',
+      'postalcode',
+      'description'
     ],
     include: [
       {
         model: Comment,
-        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+        attributes: ['id', 'comment', 'service_id', 'user_id', 'postedAt'],
         include: {
           model: User,
-          attributes: ['username']
+          attributes: ['firstName', 'lastName']
         }
       },
       {
         model: User,
-        attributes: ['username']
+        attributes: ['firstName', 'lastName']
       }
     ]
   })
     .then(dbPostData => {
-      const posts = dbPostData.map(post => post.get({ plain: true }));
+      const service = dbPostData.map(service => service.get({ plain: true }));
 
       res.render('homepage', {
-        posts,
+        service,
         loggedIn: req.session.loggedIn
       });
     })
@@ -61,22 +62,23 @@ router.get('/signup', (req, res) => {
   res.render('signup');
 });
 
-// get single post by id 
-router.get('/post/:id', (req, res) => {
-  Post.findOne({
+// get single service by id 
+router.get('/service/:id', (req, res) => {
+  Service.findOne({
     where: {
       id: req.params.id
     },
     attributes: [
       'id',
-      'post_content',
-      'title',
-      'created_at'
+      'name',
+      'address',
+      'postalcode',
+      'description'
     ],
     include: [
       {
         model: Comment,
-        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+        attributes: ['id', 'comment', 'service_id', 'user_id', 'postedAt'],
         include: {
           model: User,
           attributes: ['username']
@@ -90,15 +92,15 @@ router.get('/post/:id', (req, res) => {
   })
     .then(dbPostData => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        res.status(404).json({ message: 'No service found with this id' });
         return;
       }
       // serialize the data
-      const post = dbPostData.get({ plain: true });
+      const service = dbPostData.get({ plain: true });
       console.log(req.session.loggedIn);
       // pass data to template
-      res.render('single-post', {
-        post,
+      res.render('single-service', {
+        service,
         loggedIn: req.session.loggedIn
       });
     })
