@@ -7,11 +7,13 @@ const path = require("path");
 
 // set up Handlebars.js as your app's template engine of choice & add helper functions:
 const exphbs = require("express-handlebars");
+
 const hbs = exphbs.create({}); // [add 'helpers' in the bracket after]
 
 // set up express-session & sequelize store:
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,6 +30,10 @@ const sess = {
 
 app.use(session(sess));
 
+
+app.get("/signup", (req, res) => {
+  res.render("signup");
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Static assets folder
@@ -41,3 +47,4 @@ app.use(routes);
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log("Now listening"));
 });
+
