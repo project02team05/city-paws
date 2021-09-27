@@ -24,4 +24,8 @@ app.get("/search", (req, res) => {
   res.render("search");
 });
 
+app.get("/signup", (req, res) => {
+  res.render("sign-up");
+});
+
 app.listen(3001, () => console.log("Server running on 3001"));
