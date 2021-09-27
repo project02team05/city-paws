@@ -4,6 +4,7 @@ const express = require("express");
 const sequelize = require("./config/connection");
 
 const exphbs = require("express-handlebars");
+const path = require("path");
 
 const app = express();
 
@@ -25,7 +26,9 @@ app.get("/search", (req, res) => {
 });
 
 app.get("/signup", (req, res) => {
-  res.render("sign-up");
+  res.render("signup");
 });
+
+app.use(express.static(path.join(__dirname, "/public")));
 
 app.listen(3001, () => console.log("Server running on 3001"));
