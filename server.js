@@ -31,12 +31,20 @@ const sess = {
 app.use(session(sess));
 
 
-app.get("/signup", (req, res) => {
-  res.render("signup");
+app.get("/home", (req, res) => {
+  res.render("home");
 });
 
 app.get("/login", (req, res) => {
   res.render("login");
+});
+
+app.get("/search", (req, res) => {
+  res.render("search");
+});
+
+app.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
 app.use(express.json());
