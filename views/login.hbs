@@ -23,16 +23,16 @@
                     <hr class="login-hr">
                     <p class="subtitle has-text-black">Please login to proceed</p>
                     <div class="box">
-                        <form>
+                        <form class="login-form">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" type="email" placeholder="Email" autofocus="">
+                                    <input class="input is-large" type="email" placeholder="Email" autofocus="" id="email-login">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" type="password" placeholder="Password">
+                                    <input class="input is-large" type="password" placeholder="Password" id="password-login">
                                 </div>
                             </div>
                             <div class="field">
@@ -41,7 +41,7 @@
                   Remember me
                 </label>
                             </div>
-                            <button class="button is-block is-info is-large is-fullwidth">Login<i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                            <button class="button is-block is-info is-large is-fullwidth" type="submit">Login<i class="fa fa-sign-in" aria-hidden="true"></i></button>
                         </form>
                     </div>
                     <p class="has-text-black">
@@ -52,6 +52,7 @@
         </div>
     </section>
     <script async type="text/javascript" src="../js/bulma.js"></script>
+    <script src="/javascript/login.js"></script>
 </body>
 
 </html>
