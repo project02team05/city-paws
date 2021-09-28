@@ -10,7 +10,7 @@ router.post("/login", async (req, res) => {
       email: req.body.email,
     },
   });
-
+  console.log(user);
   if (user != null && bcrypt.compareSync(req.body.password, user.password)) {
     req.session.userValidation = true;
     req.session.user = {
