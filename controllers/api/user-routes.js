@@ -1,6 +1,6 @@
 // Dependencies
 const router = require("express").Router();
-const { User, Post, Comment } = require("../../models");
+const { User, Service, Comment } = require("../../models");
 
 // get all users
 router.get("/", (req, res) => {
@@ -35,8 +35,8 @@ router.get("/:id", (req, res) => {
         },
       },
       {
-        model: Post,
-        attributes: ["title"],
+        model: Service,
+        attributes: ["name"],
         through: Vote,
         as: "voted_posts",
       },
