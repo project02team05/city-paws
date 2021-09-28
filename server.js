@@ -44,8 +44,8 @@ app.use(express.urlencoded({ extended: true }));
 // Static assets folder
 app.use(express.static(path.join(__dirname, "public")));
 
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
+app.engine("hbs", exphbs({defaultLayout: 'main', extname: '.hbs'}));
+app.set("view engine", "hbs");
 
 app.use(routes);
 
