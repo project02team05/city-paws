@@ -34,6 +34,11 @@ app.use(session(sess));
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Static assets folder
