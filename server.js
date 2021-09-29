@@ -30,7 +30,6 @@ app.use(session(sess));
 
 app.get("/home", (req, res) => {
   res.render("home");
-
 });
 
 app.get("/login", (req, res) => {
@@ -53,7 +52,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", ".hbs");
 
-app.engine("hbs", exphbs({defaultLayout: 'main', extname: '.hbs'}));
+app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
 
 app.use(routes);
 

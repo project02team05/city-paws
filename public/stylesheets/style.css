@@ -5,3 +5,7 @@ html {
 .section {
   align-items: left;
 }
+
+.button {
+  background-color: #f3b469;
+}

@@ -2,18 +2,21 @@
 const User = require("./User");
 const Comment = require("./Comment");
 const Service = require("./Service");
+const Post = require("./Post");
 
 const createTables = () => {
   User.sync();
   Comment.sync();
-  Service.sync();
+    Service.sync();
+    Post.sync();
 };
 
 module.exports = {
   User,
   Comment,
-  Service,
+    Service,
+  Post,
   createTables,
 };
 
-module.exports = { User, Comment, Service, createTables };
+module.exports = { User, Comment, Service, Post, createTables };
