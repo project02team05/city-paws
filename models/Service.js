@@ -48,7 +48,7 @@ Service.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "service",
+    modelName: "Service",
   }
 );
 
