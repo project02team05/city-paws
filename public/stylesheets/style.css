@@ -9,3 +9,9 @@ html {
 .button {
   background-color: #f3b469;
 }
+
+img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
