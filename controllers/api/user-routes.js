@@ -1,5 +1,7 @@
 // Dependencies
 const router = require("express").Router();
+
+const bcrypt = require("bcrypt");
 const { User, Comment } = require("../../models");
 
 // get all users
@@ -12,6 +14,31 @@ router.get("/", (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+router.post("/login", async (req, res) => {
+  console.log(req.body);
+  let dbUserData = await User.findOne({
+    where: {
+      email: req.body.email,
+    },
+  });
+
+  if (
+    dbUserData != null &&
+    bcrypt.compareSync(req.body.password, dbUserData.password)
+  ) {
+    req.session.save(() => {
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
+
+      res.json(dbUserData);
+    });
+    res.redirect("/home");
+  } else {
+    res.redirect("/login?status=failed");
+  }
 });
 
 // Get User by Id
@@ -70,12 +97,12 @@ router.post("/", (req, res) => {
         req.session.username = dbUserData.username;
         req.session.loggedIn = true;
 
-        res.json(dbUserData);
+        res.redirect("/home");
       });
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json(err);
+      res.redirect("/signup?status=failed");
     });
 });
 

@@ -6,7 +6,7 @@ const productData = [
     address: "Down town Toronto",
     phone: "487-217-9081",
     description: "Best in downtown",
-    type: "cafe",
+    type: "Cafe",
     postalcode: "M2J1L1",
   },
   {
@@ -14,7 +14,7 @@ const productData = [
     address: "Down town Toronto",
     phone: "487-217-9081",
     description: "Best in downtown",
-    type: "cafe",
+    type: "Cafe",
     postalcode: "M2J1L2",
   },
   {
