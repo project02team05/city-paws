@@ -15,8 +15,10 @@
     <option value="Retail">Retail</option>
     <option value="Restaurant">Restaurant</option>
     <option value="Bar">Bar</option>
-
+  
+  
   </select>
+  
 </div>
 </section>
 
@@ -34,6 +36,27 @@
 </div>
 </section>
 
+<body>
+
+  <div id="map"></div>
+  <script>
+    function initMap() {
+      var location = { lat: 43.653225, lng: -79.383186 };
+      var map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12.5,
+        center: location
+      });
+      var marker = new google.maps.Marker({
+        position: mapPoint,
+        map: map
+      });
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxuRIVdHuku7ZiQry3istddXj2lMdB9xc&callback=initMap">
+  </script>
+
+</body>
 
 <section class="section">
   <h1 class="title">Search Results</h1>
@@ -61,3 +84,7 @@
     });
 
 </script>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxuRIVdHuku7ZiQry3istddXj2lMdB9xc&callback=initMap">
+  </script>
