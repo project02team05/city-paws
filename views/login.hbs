@@ -23,17 +23,21 @@
                     <hr class="login-hr">
                     <p class="subtitle has-text-black">Please login to proceed</p>
                     <div class="box">
+
                         <form action="/api/users/login" method="post">
                             <div class="field">
                                 <div class="control">
                                     <input class="input is-large" type="email"  name="email" placeholder="Email" autofocus="">
+
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="control">
+
                                     <input class="input is-large" type="password" name="password" placeholder="Password">
                                 </div> 
+
                             </div>
                             <div class="field">
                                 <label class="checkbox">
@@ -41,17 +45,20 @@
                   Remember me
                 </label>
                             </div>
+
                             <input type="submit" class="button is-block is-info is-large is-fullwidth">Login <i class="fa fa-sign-in" aria-hidden="true"></i></input>
+
                         </form>
                     </div>
                     <p class="has-text-black">
-                        <a href="">Sign Up</a> &nbsp;
+                        <a href="signup">Sign Up</a> &nbsp;
                     </p>
                 </div>
             </div>
         </div>
     </section>
     <script async type="text/javascript" src="../js/bulma.js"></script>
+    <script src="/javascript/login.js"></script>
 </body>
 
 </html>

@@ -28,20 +28,21 @@ const sess = {
 
 app.use(session(sess));
 
-app.get("/signup", (req, res) => {
-  res.render("signup");
+app.get("/home", (req, res) => {
+  res.render("home");
+
 });
 
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/home", (req, res) => {
-  res.render("home");
-});
-
 app.get("/search", (req, res) => {
   res.render("search");
+});
+
+app.get("/signup", (req, res) => {
+  res.render("signup");
 });
 
 app.use(express.json());
@@ -49,9 +50,10 @@ app.use(express.urlencoded({ extended: true }));
 // Static assets folder
 app.use(express.static(path.join(__dirname, "public")));
 
-app.engine(".hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", ".hbs");
+
+app.engine("hbs", exphbs({defaultLayout: 'main', extname: '.hbs'}));
 
 app.use(routes);
 
