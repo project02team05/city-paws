@@ -14,7 +14,7 @@ const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3088;
 
 const sess = {
   secret: process.env.SESSION_SECRET,
@@ -30,7 +30,6 @@ app.use(session(sess));
 
 app.get("/home", (req, res) => {
   res.render("home");
-
 });
 
 app.get("/login", (req, res) => {
@@ -53,7 +52,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", ".hbs");
 
-app.engine("hbs", exphbs({defaultLayout: 'main', extname: '.hbs'}));
+app.engine("hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
 
 app.use(routes);
 
