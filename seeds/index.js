@@ -1,4 +1,5 @@
 const seedServices = require("./service-seeds");
+const seedUser = require("./user-seeds");
 const { createTables } = require("../models/index");
 const sequelize = require("../config/connection");
 
@@ -9,7 +10,8 @@ const seedAll = async () => {
   console.log("\n----- Tables SYNCED -----\n");
   await seedServices();
   console.log("\n----- Services SEEDED -----\n");
-
+  await seedUser();
+  onsole.log("\n----- Users SEEDED -----\n");
   process.exit(0);
 };
 
