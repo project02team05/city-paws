@@ -6,18 +6,19 @@
   </section>
 
 <section class="section">
+   <form class="signup-form">
          <div class="columns">
             <div class="column is-4 is-offset-4">
                <div class="field">
-                  <label class="label">Name</label>
+                  <label class="label" for="firstName-signup">First Name</label>
                   <div class="control">
-                     <input class="input" type="text" placeholder="Your Name">
+                     <input class="input" type="text" placeholder="First Name" id="firstName-signup">
                   </div>
                </div>
                <div class="field">
-                  <label class="label">Last Name</label>
+                  <label class="label" for="lastName-signup">Last Name</label>
                   <div class="control has-icons-left has-icons-right">
-                     <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+                     <input class="input is-success" type="text" placeholder="Last Name" value="" id="lastName-signup">
                      <span class="icon is-small is-left">
                      <i class="fa fa-user"></i>
                      </span>
@@ -27,9 +28,15 @@
                   </div>
                </div>
                <div class="field">
-                  <label class="label">Email</label>
+                  <label class="label" for="username-signup">Username</label>
                   <div class="control has-icons-left has-icons-right">
-                     <input class="input is-danger" type="email" placeholder="Email input" value="hello@">
+                     <input class="input is-success" type="text" placeholder="Username" value="" id="username-signup">
+                  </div>
+               </div>
+               <div class="field">
+                  <label class="label" for="email-signup">Email</label>
+                  <div class="control has-icons-left has-icons-right">
+                     <input class="input is-danger" type="email" placeholder="Email input" value="@" id="email-signup">
                      <span class="icon is-small is-left">
                      <i class="fa fa-envelope"></i>
                      </span>
@@ -40,16 +47,19 @@
                   
                </div>
                <div class="field">
-                  <label class="label">Password</label>
+                  <label class="label" for="password-signup">Password</label>
                   <div class="control">
-                     <input class="input" type="password" placeholder="Password">
+                     <input class="input" type="password" placeholder="Password" id="password-signup">
                   </div>
                </div>
                <div class="field is-grouped">
                   <div class="control">
-                     <button class="button is-link">Submit</button>
+                     <button type="submit" class="button is-link">Submit</button>
                   </div>
                </div>
             </div>
          </div>
+         </form>
       </section>
+
+<script src="/javascript/signup.js"></script>

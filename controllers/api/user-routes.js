@@ -35,52 +35,53 @@ router.post("/login", async (req, res) => {
 
       res.json(dbUserData);
     });
-    res.redirect("/home");
+    res.redirect("/search");
   } else {
     res.redirect("/login?status=failed");
   }
 });
 
 // Get User by Id
-router.get("/:id", (req, res) => {
-  User.findOne({
-    attributes: { exclude: ["password"] },
-    where: {
-      id: req.params.id,
-    },
-    include: [
-      {
-        model: Post,
-        attributes: ["id", "title", "post_url", "created_at"],
-      },
-      {
-        model: Comment,
-        attributes: ["id", "comment_text", "created_at"],
-        include: {
-          model: Post,
-          attributes: ["title"],
-        },
-      },
-      {
-        model: Post,
-        attributes: ["title"],
-        through: Vote,
-        as: "voted_posts",
-      },
-    ],
-  })
-    .then((dbUserData) => {
-      if (!dbUserData) {
-        res.status(404).json({ message: "No user found with this id" });
-        return;
-      }
-      res.json(dbUserData);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+// router.get("/:id", (req, res) => {
+//   User.findOne({
+//     attributes: { exclude: ["password"] },
+//     where: {
+//       id: req.params.id,
+//     },
+//     include: [
+//       {
+//         model: Post,
+//         attributes: ["id", "title", "post_url", "created_at"],
+//       },
+//       {
+//         model: Comment,
+//         attributes: ["id", "comment_text", "created_at"],
+//         include: {
+//           model: Post,
+//           attributes: ["title"],
+//         },
+//       },
+//       {
+//         model: Post,
+//         attributes: ["title"],
+//         through: Vote,
+//         as: "voted_posts",
+//       },
+//     ],
+//   })
+//     .then((dbUserData) => {
+//       if (!dbUserData) {
+//         res.status(404).json({ message: "No user found with this id" });
+//         return;
+//       }
+//       res.json(dbUserData);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
+
 // Post user
 router.post("/", (req, res) => {
   // expects Login information
@@ -106,35 +107,35 @@ router.post("/", (req, res) => {
     });
 });
 
-// user login
-router.post('/login', (req, res) => {
-  // expects {email: 'testing@gmail.com', password: 'password1234'}
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then(dbUserData => {
-    if (!dbUserData) {
-      res.status(400).json({ message: 'No user with that email address!' });
-      return;
-    }
+// // user login
+// router.post('/login', (req, res) => {
+//   // expects {email: 'testing@gmail.com', password: 'password1234'}
+//   User.findOne({
+//     where: {
+//       email: req.body.email
+//     }
+//   }).then(dbUserData => {
+//     if (!dbUserData) {
+//       res.status(400).json({ message: 'No user with that email address!' });
+//       return;
+//     }
 
-    const validPassword = dbUserData.checkPassword(req.body.password);
+//     const validPassword = dbUserData.checkPassword(req.body.password);
 
-    if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect password!' });
-      return;
-    }
+//     if (!validPassword) {
+//       res.status(400).json({ message: 'Incorrect password!' });
+//       return;
+//     }
 
-    req.session.save(() => {
-      req.session.user_id = dbUserData.id;
-      req.session.username = dbUserData.username;
-      req.session.loggedIn = true;
+//     req.session.save(() => {
+//       req.session.user_id = dbUserData.id;
+//       req.session.username = dbUserData.username;
+//       req.session.loggedIn = true;
   
-      res.json({ user: dbUserData, message: 'You are now logged in!' });
-    });
-  });
-});
+//       res.json({ user: dbUserData, message: 'You are now logged in!' });
+//     });
+//   });
+// });
 
 // user logout
 router.post('/logout', (req, res) => {
