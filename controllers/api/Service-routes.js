@@ -43,6 +43,7 @@ router.get("/all", async (req, res) => {
 
   res.status(200).json(data);
 });
+
 router.get("/:id", async (req, res) => {
   let service = await Service.findOne({
     where: {

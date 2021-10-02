@@ -7,6 +7,8 @@ const path = require("path");
 // set up Handlebars.js as your app's template engine of choice & add helper functions:
 const exphbs = require("express-handlebars");
 
+// add hbs helper functions
+//const helpers = require('./utils/helpers');
 const hbs = exphbs.create({}); // [add 'helpers' in the bracket after]
 
 // set up express-session & sequelize store:

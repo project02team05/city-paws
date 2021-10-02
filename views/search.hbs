@@ -42,9 +42,28 @@
   </h2>
 </section>
 
-<section class="section">
-<input class="input is-large" type="text" placeholder="Large input">
+<section class="section reviews">
+<form class="comment-form">
+  <div>
+    <textarea class="input is-medium" type="text" placeholder="Reviews" name="comment-body" id="comment-text"></textarea>
+  </div>
+
+  <div>
+    <button class="button is-rounded is-4 addCommentBtn" type="submit">+ Review</button>
+  </div>
+</form>
+
+<br>
+<div>
+  <h1 class="title">Reviews</h1>
+  <div class="comments subtitle">
+
+  </div>
+</div>
+
 </section>
+
+
 
 <script>
 
@@ -56,8 +75,61 @@
          $("#description").html("<p>" + res.service.name + "</p><br>"+"<p>"+res.service.description+"</p><br>"+ "<p>" + res.service.address + "</p><br>")
        });
        
+       let resLength = result[0].comments.length;
+
+        for (i = 0; i < resLength; i++){
+        console.log("hii twice", result[0].comments[i]);
+        $(".comments").append("<div>" + result[0].comments[i].comment + "</div><br>"+"<div>"+"posted by"+" user "+result[0].comments[i].postedBy+"</div><br>");
         }
-      });
-    });
+
+        console.log("service id:", result[0].service.id)
+
+        const serviceid = result[0].service.id;
+
+        async function commentFormHandler(event) {
+        event.preventDefault();
+
+        const comment = document.querySelector('textarea[name="comment-body"]').value.trim();
+        
+        if (comment) {
+          const response = await fetch('/api/reviews/add', {
+            method: 'POST',
+            body: JSON.stringify({
+              serviceid,
+              comment
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          console.log(response, "comment content", comment);
+
+          if (!response.ok) {
+            alert(response.statusText);
+          } else {
+            $.ajax({
+            url: "/api/services/search?type="+$("#type").val()+"&location="+$("#location").val(), success: function (result) {
+                       
+            let resLength = result[0].comments.length;
+            $(".comments").empty();
+            $("#comment-text").val("");
+            for (i = 0; i < resLength; i++){
+            console.log("hii twice", result[0].comments[i]);
+            $(".comments").append("<div>" + result[0].comments[i].comment + "</div><br>"+"<div>"+"posted by"+" user "+result[0].comments[i].postedBy+"</div><br>");
+            }
+          }
+          })
+          }
+        }
+      }
+
+      document.querySelector('.comment-form').addEventListener('submit', commentFormHandler);
+       }
+      }) 
+      })
+ 
+  
 
 </script>
+
