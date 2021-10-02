@@ -19,10 +19,10 @@ Comment.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    rating: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    // rating: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    // },
     postedAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -43,7 +43,7 @@ Comment.init(
         model: "User",
         key: "id",
       },
-    },
+    }
   },
   {
     sequelize,

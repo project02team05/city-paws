@@ -24,18 +24,21 @@ router.post("/login", async (req, res) => {
     },
   });
 
+  console.log("testing login", dbUserData);
   if (
     dbUserData != null &&
     bcrypt.compareSync(req.body.password, dbUserData.password)
   ) {
+    console.log("we're inside the if loop", dbUserData.dataValues.id);
     req.session.save(() => {
-      req.session.user_id = dbUserData.id;
-      req.session.username = dbUserData.username;
+      req.session.user_id = dbUserData.dataValues.id;
+      req.session.username = dbUserData.dataValues.username;
       req.session.loggedIn = true;
 
-      res.json(dbUserData);
+      res.redirect("/search");
+
     });
-    res.redirect("/search");
+    
   } else {
     res.redirect("/login?status=failed");
   }
