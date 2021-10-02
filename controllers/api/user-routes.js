@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
 
       res.json(dbUserData);
     });
-    res.redirect("/search");
+    res.redirect("/search");// change to /home
   } else {
     res.redirect("/login?status=failed");
   }
