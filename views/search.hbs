@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+  
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -15,8 +27,6 @@
     <option value="Retail">Retail</option>
     <option value="Restaurant">Restaurant</option>
     <option value="Bar">Bar</option>
-  
-  
   </select>
   
 </div>
@@ -40,17 +50,13 @@
 
   <div id="map"></div>
   <script>
-    function initMap() {
-      var location = { lat: 43.653225, lng: -79.383186 };
-      var map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12.5,
-        center: location
-      });
-      var marker = new google.maps.Marker({
-        position: mapPoint,
-        map: map
-      });
-    }
+    function geocode(){
+      axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+        params:{
+          address:location,
+          key:'AIzaSyB6sjOjm9eINjpI4uPW_vcdX4isIxsfaZY'
+        }
+      })
   </script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxuRIVdHuku7ZiQry3istddXj2lMdB9xc&callback=initMap">
@@ -65,9 +71,28 @@
   </h2>
 </section>
 
-<section class="section">
-<input class="input is-large" type="text" placeholder="Large input">
+<section class="section reviews">
+<form class="comment-form">
+  <div>
+    <textarea class="input is-medium" type="text" placeholder="Reviews" name="comment-body" id="comment-text"></textarea>
+  </div>
+
+  <div>
+    <button class="button is-rounded is-4 addCommentBtn" type="submit">+ Review</button>
+  </div>
+</form>
+
+<br>
+<div>
+  <h1 class="title">Reviews</h1>
+  <div class="comments subtitle">
+
+  </div>
+</div>
+
 </section>
+
+
 
 <script>
 
@@ -79,12 +104,61 @@
          $("#description").html("<p>" + res.service.name + "</p><br>"+"<p>"+res.service.description+"</p><br>"+ "<p>" + res.service.address + "</p><br>")
        });
        
+       let resLength = result[0].comments.length;
+
+        for (i = 0; i < resLength; i++){
+        console.log("hii twice", result[0].comments[i]);
+        $(".comments").append("<div>" + result[0].comments[i].comment + "</div><br>"+"<div>"+"posted by"+" user "+result[0].comments[i].postedBy+"</div><br>");
         }
-      });
-    });
+
+        console.log("service id:", result[0].service.id)
+
+        const serviceid = result[0].service.id;
+
+        async function commentFormHandler(event) {
+        event.preventDefault();
+
+        const comment = document.querySelector('textarea[name="comment-body"]').value.trim();
+        
+        if (comment) {
+          const response = await fetch('/api/reviews/add', {
+            method: 'POST',
+            body: JSON.stringify({
+              serviceid,
+              comment
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          console.log(response, "comment content", comment);
+
+          if (!response.ok) {
+            alert(response.statusText);
+          } else {
+            $.ajax({
+            url: "/api/services/search?type="+$("#type").val()+"&location="+$("#location").val(), success: function (result) {
+                       
+            let resLength = result[0].comments.length;
+            $(".comments").empty();
+            $("#comment-text").val("");
+            for (i = 0; i < resLength; i++){
+            console.log("hii twice", result[0].comments[i]);
+            $(".comments").append("<div>" + result[0].comments[i].comment + "</div><br>"+"<div>"+"posted by"+" user "+result[0].comments[i].postedBy+"</div><br>");
+            }
+          }
+          })
+          }
+        }
+      }
+
+      document.querySelector('.comment-form').addEventListener('submit', commentFormHandler);
+       }
+      }) 
+      })
+ 
+  
 
 </script>
 
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxuRIVdHuku7ZiQry3istddXj2lMdB9xc&callback=initMap">
-  </script>
