@@ -15,3 +15,17 @@ img {
   top: 0;
   left: 0;
 }
+
+#marginTop {
+  margin-top: 50px;
+}
+
+.comments {
+  background-color: #f7f7eb;
+  border-radius: 10px;
+}
+
+.searchMargin {
+  margin-top: 10px;
+}
+

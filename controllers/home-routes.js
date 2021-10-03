@@ -10,9 +10,19 @@ router.get('/home', (req, res) => {
 
 });
 
+// search service page
+router.get("/search", (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/login');
+    return;
+} 
+  res.render('search');
+});
+
 // login page 
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
+      console.log(req.session.loggedIn)
         res.redirect('/search');
         return;
     }
@@ -29,5 +39,7 @@ router.get('/signup', (req, res) => {
   
     res.render('signup');
   });
+
+
 
 module.exports = router;
