@@ -35,7 +35,7 @@ Toronto.
 ## Heroku Website (Deployed Application)
 https://cryptic-cliffs-70545.herokuapp.com/home 
 
-![application screenshot](./public/images/screenshot.png) 
+![screenshot](./public/images/screenshot.png) 
 
 ## License
 This application is covered by [MIT](https://opensource.org/licenses/MIT) license. 
