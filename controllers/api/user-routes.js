@@ -39,8 +39,7 @@ router.post("/login", async (req, res) => {
 
     });
 
-    res.redirect("/search");// change to /home
-
+    res.redirect("/search")
   } else {
     res.redirect("/login?status=failed");
   }
