@@ -50,16 +50,28 @@
 <body>
 <section>
 <div class="container">
+<h2 id="text-center">Enter Your Search:</h2>
+<form id=location-form>
+  <input type="text" id="location-input" class="form-control form-control-lg">
+  <br>
+<button type="submit" class="btn btn-primary">Submit</button> 
+</form>
 <div id="formatted-address"></div>
 <div id="address-components"></div>
+<div id="geometry"></div>
 </div>
 </section>
 
   <script>
-    geocode();
+
+    //get location form
+    var locationForm = document.getElementById('location-form');
+
     
-    function geocode(){
-      var location = '634 Queen st Toronto CA';
+
+    function geocode(e){
+      e.preventDefault();
+      var location = document.getElementById('location-input').value;
       axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
         params:{
           address:location,
@@ -87,19 +99,36 @@
         }</strong>: ${addressComponents[i].long_name}</li>
         `;
       }
-      addressComponentsOutput += '<lu>';
+      addressComponentsOutput += '</lu>';
+
+      
+      // Geometry
+        var lat = response.data.results[0].geometry.location.lat;
+        var lng = response.data.results[0].geometry.location.lng;
+        var geometryOutputs = `
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Latitude</strong>:
+          ${lat}</li>
+          <li class="list-group-item"><strong>longitude</strong>:
+          ${lng}</li>
+        </ul>
+        `;
 
         // output to app
       document.getElementById('address-components').innerHTML = 
       addressComponentsOutput;
       document.getElementById('formatted-address').innerHTML = 
       formattedAddressOutput;
+      document.getElementById('geometry').innerHTML = 
+      geometryOutput;
       })
       .catch(function(error) {
         console.log(error);
       });
+      
     }
-  
+  // Listen For Submit
+    locationForm.addEventListener('submit', geocode);
 </script>
 
 
