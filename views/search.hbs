@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
   
 
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <section class="section">
   <h1 class="title">Find a Spot</h1>
@@ -44,24 +44,68 @@
 <button class="button is-rounded is-4" id="SearchBtn">Search</button>
   </select>
 </div>
+
 </section>
 
 <body>
+<section>
+<div class="container">
+<div id="formatted-address"></div>
+<div id="address-components"></div>
+</div>
+</section>
 
-  <div id="map"></div>
   <script>
+    geocode();
+    
     function geocode(){
+      var location = '634 Queen st Toronto CA';
       axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
         params:{
           address:location,
           key:'AIzaSyB6sjOjm9eINjpI4uPW_vcdX4isIxsfaZY'
         }
       })
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxuRIVdHuku7ZiQry3istddXj2lMdB9xc&callback=initMap">
-  </script>
+      .then(function(response){
 
+        // Log all response here
+        console.log(response);
+        var formattedAddress = response.data.results[0].formatted_address;
+        var formattedAddressOutputs = `
+        <ul class="list-group">
+          <li class="list-group-item">${formattedAddress}</li>
+        </ul>
+        `;
+
+        // Address components
+        var addressComponents = response.data.results[0].address_components;
+        var addressComponentsOutput = '<ul class="list-group">';
+        for(var i = 0;i < addressComponents.length;i++){
+          addressComponentsOutput += `
+          <li 
+          class="list-group-item"><strong>${addressComponents[i].types[0]
+        }</strong>: ${addressComponents[i].long_name}</li>
+        `;
+      }
+      addressComponentsOutput += '<lu>';
+
+        // output to app
+      document.getElementById('address-components').innerHTML = 
+      addressComponentsOutput;
+      document.getElementById('formatted-address').innerHTML = 
+      formattedAddressOutput;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
+  
+</script>
+
+
+<section>
+<div id="map"></div>
+</section>
 </body>
 
 <section class="section">
@@ -161,4 +205,4 @@
   
 
 </script>
-
+</html>
