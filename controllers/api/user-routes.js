@@ -16,36 +16,64 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/login", async (req, res) => {
-  console.log(req.body);
-  let dbUserData = await User.findOne({
+// router.post("/login", async (req, res) => {
+//   console.log(req.body);
+//   let dbUserData = await User.findOne({
+//     where: {
+//       email: req.body.email,
+//     },
+//   });
+
+//   console.log("testing login", dbUserData);
+//   if (
+//     dbUserData != null &&
+//     bcrypt.compareSync(req.body.password, dbUserData.password)
+//   ) {
+//     console.log("we're inside the if loop", dbUserData.dataValues.id);
+//     req.session.save(() => {
+//       req.session.user_id = dbUserData.dataValues.id;
+//       req.session.username = dbUserData.dataValues.username;
+//       req.session.loggedIn = true;
+
+//       res.redirect("/search");
+
+//     });
+
+//     res.redirect("/search");// change to /home
+
+//   } else {
+//     res.redirect("/login?status=failed");
+//   }
+// });
+
+router.post('/login', (req, res) => {
+  // expects {email: 'testing@gmail.com', password: 'password1234'}
+  User.findOne({
     where: {
-      email: req.body.email,
-    },
-  });
+      email: req.body.email
+    }
+  }).then(dbUserData => {
+    if (!dbUserData) {
+      res.redirect("/login?status=failed");
+      return;
+    }
 
-  console.log("testing login", dbUserData);
-  if (
-    dbUserData != null &&
-    bcrypt.compareSync(req.body.password, dbUserData.password)
-  ) {
-    console.log("we're inside the if loop", dbUserData.dataValues.id);
+    const validPassword = dbUserData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res.redirect("/login?status=failed");
+      return;
+    }
+
     req.session.save(() => {
-      req.session.user_id = dbUserData.dataValues.id;
-      req.session.username = dbUserData.dataValues.username;
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
       req.session.loggedIn = true;
-
+  
       res.redirect("/search");
-
     });
-
-    res.redirect("/search");// change to /home
-
-  } else {
-    res.redirect("/login?status=failed");
-  }
+  });
 });
-
 
 // Post user
 router.post("/", (req, res) => {
@@ -75,6 +103,7 @@ router.post("/", (req, res) => {
 // user logout
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
+    console.log(req.session.loggedIn)
     req.session.destroy(() => {
       res.status(204).end();
     });
