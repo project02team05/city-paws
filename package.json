@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/project02team05/city-paws#readme",
   "dependencies": {
+    "axios": "^0.22.0",
     "bcrypt": "^5.0.1",
     "bulma": "^0.9.3",
     "connect-session-sequelize": "^7.1.2",
@@ -28,7 +29,7 @@
     "express-session": "^1.17.2",
     "handlebars": "^4.7.7",
     "mysql2": "^2.3.0",
-    "sequelize": "^6.6.5",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "sequelize": "^6.6.5"
   }
 }

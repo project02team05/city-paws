@@ -1,7 +1,12 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+
+
+<section class="section">
+
 <section> <div class="section">
+
   <h1 class="title">Find a Spot</h1>
   <h2 class="subtitle has-text-light">
     Refine your search to find the perfect spot for you and your furry family.
@@ -16,6 +21,7 @@
     <option value="Restaurant">Restaurant</option>
     <option value="Bar">Bar</option>
   </select>
+  
 </div>
 </div>
 </section>
@@ -24,9 +30,80 @@
   <h2 class="subtitle has-text-light">
     Search for a location using Postal Code
   </h2>
+
+  <div class="control">
+<input class="input is-rounded is-3" type="text" id="search" placeholder="Your Search">
+</div>
+<br>
+  </select>
+
+<section>
+  <div id="map"></div>
+</section>
+
+<script>
+  var map, infoWindow;
+
+function createMap () {
+    var options = {
+        center: { lat: 43.653225, lng: -79.383186},
+        zoom: 15,
+
+
+    };
+    // Get by Id
+    map = new google.maps.Map(document.getElementById('map'), options);
+
+    infoWindow = new google.maps.InfoWindow;
+
+    // Start input
+    var input = document.getElementById('search');
+    var searchBox = new google.maps.places.SearchBox(input);
+    // Listen for bounds changes
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    var markers = [];
+    // Search box
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+
+    if (places.length === 0)
+    return;
+    
+    markers.forEach(function (m) { m.setMap(null); });      
+    markers = [];
+// Bounds
+    var bounds = new google.maps.LatLngBounds();
+
+    places.forEach(function (p) {
+      if (!p.geometry)
+      return;
+
+      markers.push(new google.maps.Marker({
+        map: map,
+        title: p.name,
+        position: p.geometry.location
+      }));
+
+      if (p.geometry.viewport)
+      bounds.union(p.geometry.viewport);
+      else
+      bounds.extend(p.geometry.location);
+    });
+
+    map.fitBounds(bounds);
+});
+
+}   
+</script>
+
+
   <input class="input is-rounded is-3" type="text" id="location" placeholder="Your Search">
   <button class="button is-rounded is-4 searchMargin" id="SearchBtn">Search</button>
 </div>
+
 
 <section class="section">
   <h1 class="title">Search Results</h1>
@@ -122,8 +199,9 @@
        }
       }) 
       })
- 
+ </script>
   
-
-</script>
-
+  
+  <script 
+    src="https://maps.googleapis.com/maps/api/js?callback=createMap&libraries=places&key=AIzaSyB6sjOjm9eINjpI4uPW_vcdX4isIxsfaZY" async defer></script> 
+  
