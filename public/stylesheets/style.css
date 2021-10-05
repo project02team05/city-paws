@@ -1,5 +1,5 @@
 html {
-  background-color: #1e86d1;
+  background-color: #4da5e4;
 }
 
 .section {
@@ -8,10 +8,4 @@ html {
 
 .button {
   background-color: #f3b469;
-}
-
-img {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
